@@ -1,0 +1,52 @@
+# -----------------------
+# Terraform
+# -----------------------
+**/.terraform/*
+.terraform.tfstate*
+terraform.tfstate*
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+
+# Local overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform lock files (optional)
+# If you want consistent provider versions across machines, keep it.
+# If not, uncomment the next line to ignore it:
+# .terraform.lock.hcl
+
+# -----------------------
+# Node.js (Express app)
+# -----------------------
+app/node_modules/
+app/npm-debug.log
+app/yarn-error.log
+
+# Local runtime files
+*.log
+
+# -----------------------
+# Environment files
+# -----------------------
+*.env
+*.env.*
+.envrc
+
+# -----------------------
+# VSCode / Editor
+# -----------------------
+.vscode/
+.idea/
+*.swp
+
+# -----------------------
+# OS files
+# -----------------------
+.DS_Store
+Thumbs.db
