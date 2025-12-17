@@ -1,1 +1,40 @@
+name: Deploy to ECS
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials (OIDC)
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::624012998763>:role/github-actions-ecs-oidc-role
+        aws-region: us-east-1
+
+    - name: Login to ECR
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t ecs-hello-world .
+        docker tag ecs-hello-world:latest 624012998763.dkr.ecr.us-east-1.amazonaws.com/ecs-hello-world:latest
+        docker push 624012998763.dkr.ecr.us-east-1.amazonaws.com/ecs-hello-world:latest
+
+    - name: Force ECS deployment
+      run: |
+        aws ecs update-service \
+          --cluster ecs-hello-world-cluster-nv \
+          --service ecs-hello-world-task-nv-service \
+          --force-new-deployment
 
