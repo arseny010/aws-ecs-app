@@ -27,7 +27,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t ecs-hello-world .
+        docker build -t ecs-hello-world ./app
         docker tag ecs-hello-world:latest 624012998763.dkr.ecr.us-east-1.amazonaws.com/ecs-hello-world:latest
         docker push 624012998763.dkr.ecr.us-east-1.amazonaws.com/ecs-hello-world:latest
 
