@@ -35,6 +35,6 @@ jobs:
       run: |
         aws ecs update-service \
           --cluster ecs-hello-world-cluster-nv \
-          --service ecs-hello-world-task-nv-service \
+          --service ecs-hello-world-task-nv-service-6e5uwloj \
           --force-new-deployment
 
