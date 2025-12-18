@@ -12,7 +12,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      ALB_URL: https://alb-ecs-hello-world-943339392.us-east-1.elb.amazonaws.com
+      ALB_URL: http://alb-ecs-hello-world-943339392.us-east-1.elb.amazonaws.com
 
     steps:
     - name: Checkout code
