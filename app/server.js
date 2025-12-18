@@ -7,8 +7,8 @@ AWSXRay.captureHTTPsGlobal(require("http"));
 const app = express();
 app.use(AWSXRay.express.openSegment("ecs-hello-world-app"));
 
-app.get("/", (req, res) => res.send("Hello from ECS with X-Ray!"));
+app.get("/", (req, res) => res.send("Hello from ECS with X-Ray! v2"));
 
 app.use(AWSXRay.express.closeSegment());
 
-app.listen(80, () => console.log("Running on port 80 with X-Ray"));
+app.listen(80, () => console.log("Running on port 80 with X-Ray v2"));
