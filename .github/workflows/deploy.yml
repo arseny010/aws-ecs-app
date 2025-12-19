@@ -45,7 +45,7 @@ jobs:
        echo "Waiting for ECS service to stabilize..."
        sleep 30
 
-        STATUS_CODE=$(curl -s -L -o /dev/null -w "%{http_code}" $ALB_URL)
+        STATUS_CODE=$(curl -k -s -L -o /dev/null -w "%{http_code}" $ALB_URL)
 
         echo "ALB returned status code: $STATUS_CODE"
 
