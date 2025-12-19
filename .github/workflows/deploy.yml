@@ -56,7 +56,7 @@ jobs:
 
         echo "Integration test passed"
         
-        RESPONSE=$(curl -s $ALB_URL)
+        RESPONSE=$(curl -k -s -L $ALB_URL)
 
         echo "Response: $RESPONSE"
 
