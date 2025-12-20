@@ -45,6 +45,7 @@ jobs:
        echo "Waiting for ECS service to stabilize..."
        sleep 30
 
+        echo "=== Test 1: Root endpoint returns 200 ==="
         STATUS_CODE=$(curl -k -s -L -o /dev/null -w "%{http_code}" $ALB_URL)
 
         echo "ALB returned status code: $STATUS_CODE"
@@ -61,3 +62,38 @@ jobs:
         echo "Response: $RESPONSE"
 
         echo "$RESPONSE" | grep -q "Hello" || exit 1
+
+        echo "=== Test 2: ALB rule blocks forbidden path ==="
+        STATUS_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "$ALB_URL/forbidden-test")
+        echo "Status code: $STATUS_CODE"
+
+        if [ "$STATUS_CODE" -ne 403 ]; then
+          echo "❌ Forbidden rule failed (expected 403)"
+          exit 1
+        fi
+
+        echo "✅ Forbidden path rule passed"
+
+        echo "=== Test 3: Redirect rule works ==="
+        STATUS_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "$ALB_URL/redirect-test")
+        echo "Status code: $STATUS_CODE"
+
+        if [ "$STATUS_CODE" -ne 301 ]; then
+          echo "❌ Redirect rule failed (expected 301)"
+          exit 1
+        fi
+
+        echo "✅ Redirect rule passed"
+
+        echo "=== Test 4: WAF blocks request with header ==="
+        STATUS_CODE=$(curl -k -s -H "X-Test-Block: true" -o /dev/null -w "%{http_code}" "$ALB_URL/")
+        echo "Status code: $STATUS_CODE"
+
+        if [ "$STATUS_CODE" -ne 403 ]; then
+          echo "❌ WAF header block failed (expected 403)"
+          exit 1
+        fi
+
+        echo "✅ WAF rule passed"
+
+        echo "🎉 All integration tests passed"
