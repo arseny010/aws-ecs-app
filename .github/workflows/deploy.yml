@@ -64,12 +64,9 @@ jobs:
         echo "$RESPONSE" | grep -q "Hello" || exit 1
 
         echo "=== Test 2: ALB rule blocks forbidden path ==="
-        STATUS_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "$ALB_URL/forbidden-test")
-        echo "Status code: $STATUS_CODE"
-
         if [ "$STATUS_CODE" -ne 403 ]; then
-          echo "❌ Forbidden rule failed (expected 403)"
-          exit 1
+        echo "❌ Forbidden rule failed (expected 403)"
+        exit 1
         fi
 
         echo "✅ Forbidden path rule passed"
