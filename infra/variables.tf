@@ -15,3 +15,13 @@ variable "azs" {
   type        = list(string)
   default     = ["us-east-1a", "us-east-1b"]
 }
+
+variable "acm_certificate_arn" {
+  description = "ACM certificate ARN for HTTPS listener"
+  type        = string
+}
+
+variable "app_name" {
+  description = "Application name used for resource naming"
+  type        = string
+}
